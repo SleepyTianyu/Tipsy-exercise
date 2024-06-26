@@ -60,7 +60,7 @@
 		ADB689512326708D006D4E2B /* Tipsy */ = {
 			isa = PBXGroup;
 			children = (
-				DF1617412C2AC4DB00B81883 /* Modal */,
+				DF1617412C2AC4DB00B81883 /* Model */,
 				DF1617402C2ABFDC00B81883 /* View */,
 				DF7C99602C29F1B2007BE60E /* Controller */,
 				ADB689522326708D006D4E2B /* AppDelegate.swift */,
@@ -80,12 +80,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		DF1617412C2AC4DB00B81883 /* Modal */ = {
+		DF1617412C2AC4DB00B81883 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				DF1617422C2AC52300B81883 /* CalculatorBrain.swift */,
 			);
-			path = Modal;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DF7C99602C29F1B2007BE60E /* Controller */ = {

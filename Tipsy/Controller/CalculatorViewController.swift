@@ -16,11 +16,7 @@ class CalculatorViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var twentyPctButton: UIButton!
     @IBOutlet weak var splitNumberLabel: UILabel!
     
-    var tip: Double = 0.10
-    var numberOfPeople: Int = 2
-    var billTotal = 0.0
-    var result: Double = 0.00
-    var resultTo2DecimalPlaces: String = ""
+    var calculateBrain = CalculatorBrain()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,40 +37,39 @@ class CalculatorViewController: UIViewController, UITextFieldDelegate {
         switch sender.tag {
         case 1:
             zeroPctButton.isSelected = true
-            return tip = 0.00
+            return calculateBrain.tip = 0.00
         case 2:
             tenPctButton.isSelected = true
-            return tip = 0.10
+            return calculateBrain.tip = 0.10
         case 3:
             twentyPctButton.isSelected = true
-            return tip = 0.20
+            return calculateBrain.tip = 0.20
         default:
             break
         }
     }
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
         splitNumberLabel.text = String(format: "%.0f", sender.value)
-        numberOfPeople = Int(sender.value)
+        calculateBrain.numberOfPeople = Int(sender.value)
     }
+    
     @IBAction func calculatePressed(_ sender: UIButton) {
         let bill = billTextField.text!
+        var billTotal: Double
         
         if bill != "" {
             billTotal = Double(bill)!
-//            let result = billTotal * (1 + tip) / Double(numberOfPeople)
-//            let resultTo2DecimalPlaces = String(format: "%.2f", result)
+            calculateBrain.calculateTotalPerPerson(totalBill: billTotal, tip: calculateBrain.tip ?? 0.00, numberOfPeople: calculateBrain.numberOfPeople ?? 0)
         }
-        result = billTotal * (1 + tip) / Double(numberOfPeople)
-        resultTo2DecimalPlaces = String(format: "%.2f", result)
         
         performSegue(withIdentifier: "goToResult", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goYoResult" {
+        if segue.identifier == "goToResult" {
             let destinationVC = segue.destination as! ResultsViewController
-            destinationVC.total = resultTo2DecimalPlaces
-            destinationVC.settings = "settings"
+            destinationVC.total = calculateBrain.getTotalPerPersonBill()
+            destinationVC.settings = calculateBrain.getSettings()
         }
     }
 }
